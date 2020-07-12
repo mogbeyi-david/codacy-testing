@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Setup Repository
-        - run: |
+        run: |
             npm install
             npm test
       - name: Run codacy-coverage-reporter
