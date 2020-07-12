@@ -2,7 +2,7 @@ name: codacy-coverage-reporter
 
 on:
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   codacy-coverage-reporter:
@@ -10,8 +10,12 @@ jobs:
     name: codacy-coverage-reporter
     steps:
       - uses: actions/checkout@master
+      - name: Setup
+        run: |
+          npm install
+          npm test
       - name: Run codacy-coverage-reporter
         uses: codacy/codacy-coverage-reporter-action@master
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: ./coverage/clover.xml
+          coverage-reports: coverage/clover.xml
