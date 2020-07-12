@@ -1,27 +1,18 @@
 name: codacy-coverage-reporter
 
-on:
-  pull_request:
-    branches: [ master ]
+on: ["push"]
 
 jobs:
   codacy-coverage-reporter:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x]
+    name: codacy-coverage-reporter
     steps:
       - uses: actions/checkout@master
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: codacy/codacy-coverage-reporter-action@master
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Setup Repository
-        run: |
-            npm install
-            npm test
       - name: Run codacy-coverage-reporter
         uses: codacy/codacy-coverage-reporter-action@master
+        run: |
+          npm install
+          npm test
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: coverage/clover.xml
