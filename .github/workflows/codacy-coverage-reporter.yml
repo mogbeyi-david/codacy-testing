@@ -7,9 +7,19 @@ on:
 jobs:
   codacy-coverage-reporter:
     runs-on: ubuntu-latest
-    name: codacy-coverage-reporter
+    strategy:
+      matrix:
+        node-version: [12.x]
     steps:
       - uses: actions/checkout@master
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Setup Repository
+        - run: |
+            npm install
+            npm test
       - name: Run codacy-coverage-reporter
         uses: codacy/codacy-coverage-reporter-action@master
         with:
